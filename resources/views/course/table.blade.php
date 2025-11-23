@@ -1,34 +1,10 @@
 <x-layout>
     <section>
         <div class= "p-10" margin-auto>
-            <h1 class="text-3xl font-bold mb-6 text-center underline">Courses</h1>
-            <form action="/save-course", method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="name">Course Name</label>
-                        <input type="text" name="name" id="name" class="w-full rounded">
-                    </div>
-                    <div>
-                        <label for="price">Course Price</label>
-                        <input type="number" name="price" id="price" class="w-full rounded">
-                    </div>
-                    <div class="col-span-2">
-                        <label for="description">Course Description</label>
-                        <textarea name="description" id="description" rows="4" class="w-full rounded"></textarea>
-                    </div>
-                    <div>
-                        <label for="image">Course image</label>
-                        <input type="file" name="image" id="image" class="w-full rounded">
-                    </div>
-                    <div class="col-span-2 flex justify-center">
-                        <button type="submit" class="bg-green-500 hover:bg-green-700 px-6 py-2 rounded mt-6 text-white">Add Course</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default col-span-2 mt-10 margin-auto p-10">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold mb-6 text-center underline col-span-3">Courses</h1>
+                <a href="{{route('course')}}" class="bg-[#4949db] px-2 py-1 rounded-3xl text-amber-50 text-1xl "> <i class="fa-solid fa-plus"></i> create course</a>
+            </div>
                 <table class="w-full text-sm text-left rtl:text-right text-body">
                     <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
                         <tr>
@@ -71,13 +47,18 @@
                                 <img src="{{asset($course->image)}}" class="h-[100px]"alt="">
                             </td>
                             <td class-="px-6 py-4 font-medium text-body whitespace-nowrap">
-                                <form action="/delete-course/{{$course->id}}", method="POST">
-                                    @csrf
-                                    @method("delete")
-                                    <button type="submit">
-                                    <i class="fa-solid fa-trash  text-red-600 cursor-pointer"></i>
-                                    </button>
-                                </form>
+                                <div class="flex gap-4">
+                                    <form action="{{route('course-delete',$course->id)}}", method="POST">
+                                        @csrf
+                                        @method("delete")
+                                        <button type="submit">
+                                        <i class="fa-solid fa-trash  text-red-600 cursor-pointer"></i>
+                                        </button>
+                                    </form>
+                                    <a href="{{route('course-edit',$course->id)}}", method="GET">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
